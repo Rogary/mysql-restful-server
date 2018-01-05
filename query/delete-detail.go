@@ -14,17 +14,10 @@ func DeleteDetail(c *gin.Context) {
 	}
 }
 
-/**
-* func DeleteDetail
-* table/:id
-**/
 func deleteDetail(c *gin.Context) {
-	//get param
 	table := c.Param("table")
 	id := c.Param("id")
 	sqlstring := "delete  from " + table + " where id = '" + id + "' ;"
-	// query
-
 	result, err := connection.GetConnection().Exec(sqlstring)
 	if err != nil {
 		fmt.Println(err)

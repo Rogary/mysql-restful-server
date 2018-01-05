@@ -7,15 +7,8 @@ import (
 	"log"
 )
 
-/**
-* func CheckUser
-*
-**/
 func CheckUser(username string, passwd string) bool {
-	//get param
-
 	sqlstring := "select id from " + conf.GetAuthTableName() + " where " + conf.GetAuthName() + " = '" + username + "' and " + conf.GetAuthPwd() + " = '" + passwd + "' ;"
-	// query
 	log.Println(sqlstring)
 	rows, err := connection.GetConnection().Query(sqlstring)
 	defer rows.Close()
@@ -31,7 +24,6 @@ func CheckUser(username string, passwd string) bool {
 	values := make([]sql.RawBytes, len(columns))
 	if len(values) > 0 {
 		return true
-	} else {
-		return false
 	}
+	return false
 }
