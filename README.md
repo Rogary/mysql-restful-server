@@ -13,7 +13,7 @@ go build
 ```
 
 ```bash
-./mysql-rest-api
+./mysql-restful-server
 ```
 
 ```bash
