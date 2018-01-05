@@ -44,7 +44,7 @@ mysql:
 ## API
 
 |Method         | Path           | Auth  |
-| :-------------: |:-------------:| :-----:|
+| :-------------: |:-------------| :-----:|
 | GET     | /api/v1/:tableName/:id | NO |
 | GET     | /api/v1/:tableName?order=desc&page=0&size=20 | NO |
 | POST     | /login | NO |
