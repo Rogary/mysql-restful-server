@@ -5,31 +5,66 @@ import (
 
 	"go-mysql-rest-api/query"
 
-	"github.com/appleboy/gin-jwt"
+	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 )
 
 var jwtMiddleware *jwt.GinJWTMiddleware = nil
 
+type login struct {
+	Username string `form:"username" json:"username" binding:"required"`
+	Password string `form:"password" json:"password" binding:"required"`
+}
+type User struct {
+	UserName string
+}
+
+var identityKey = "username"
+
 func GetJWTMiddleware() *jwt.GinJWTMiddleware {
 	if jwtMiddleware == nil {
 		jwtMiddleware = &jwt.GinJWTMiddleware{
-			Realm:            "test zone",
-			Key:              []byte("secret key"),
+			Realm:            "testzone",
+			Key:              []byte("secretkey"),
 			Timeout:          time.Hour,
 			MaxRefresh:       time.Hour,
 			SigningAlgorithm: "RS256",
-			PrivKeyFile:      "testdata/jwtRS256.key",
-			PubKeyFile:       "testdata/jwtRS256.key.pub",
-			Authenticator: func(userId string, password string, c *gin.Context) (string, bool) {
-				if query.CheckUser(userId, password) {
-
-					return userId, true
+			PrivKeyFile:      "/Users/rogary/Desktop/my/go/src/go-mysql-rest-api/jwtRS256.key",
+			PubKeyFile:       "/Users/rogary/Desktop/my/go/src/go-mysql-rest-api/jwtRS256.key.pub",
+			IdentityKey:      identityKey,
+			PayloadFunc: func(data interface{}) jwt.MapClaims {
+				if v, ok := data.(string); ok {
+					return jwt.MapClaims{
+						identityKey: v,
+					}
+				}
+				return jwt.MapClaims{}
+			},
+			IdentityHandler: func(c *gin.Context) interface{} {
+				claims := jwt.ExtractClaims(c)
+				return &User{
+					UserName: claims[identityKey].(string),
+				}
+			},
+			Authenticator: func(c *gin.Context) (interface{}, error) {
+				var loginVals login
+				if err := c.ShouldBind(&loginVals); err != nil {
+					return "", jwt.ErrMissingLoginValues
 				}
 
-				return userId, false
+				username := loginVals.Username
+				password := loginVals.Password
+
+				if query.CheckUser(username, password) {
+
+					return &User{
+						UserName: username,
+					}, nil
+				}
+
+				return nil, jwt.ErrFailedAuthentication
 			},
-			Authorizator: func(userId string, c *gin.Context) bool {
+			Authorizator: func(data interface{}, c *gin.Context) bool {
 				return true
 			},
 			Unauthorized: func(c *gin.Context, code int, message string) {
@@ -45,7 +80,7 @@ func GetJWTMiddleware() *jwt.GinJWTMiddleware {
 			// - "header:<name>"
 			// - "query:<name>"
 			// - "cookie:<name>"
-			TokenLookup: "header:Authorization",
+			TokenLookup: "header:Authorization, query: token, cookie: jwt",
 			// TokenLookup: "query:token",
 			// TokenLookup: "cookie:token",
 

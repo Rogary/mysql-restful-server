@@ -8,7 +8,7 @@ A guide for creating RESTful API with Golang and MySQL and Gin.
 go get "github.com/gin-gonic/gin"
 go get "github.com/go-sql-driver/mysql"
 go get "gopkg.in/yaml.v2"
-go get "github.com/appleboy/gin-jwt"
+go get "github.com/appleboy/gin-jwt/v2"
 go build
 ```
 

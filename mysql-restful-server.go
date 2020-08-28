@@ -23,6 +23,7 @@ func main() {
 	auths.Use(authMiddleware.MiddlewareFunc())
 	{
 		auths.DELETE("/v1/:table/:id", query.DeleteDetail)
+		auths.POST("/v1/:table", query.NewData)
 		auths.GET("/refresh_token", authMiddleware.RefreshHandler)
 	}
 	router.Run(":8989")
