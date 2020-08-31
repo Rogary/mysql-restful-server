@@ -43,14 +43,15 @@ mysql:
 
 ## API
 
-|Method         | Path           | Auth  |
-| :-------------: |:-------------| :-----:|
-| GET     | /api/v1/:tableName/:id | NO |
-| GET     | /api/v1/:tableName?order=desc&page=0&size=20 | NO |
-| POST     | /login | NO |
-| GET     | /api/refresh_token | YES |
-| DELETE     | /api/v1/:tableName/:id | YES |
-
+|Method         | Path           | Auth  | Auth  |
+| :-------------: |:-------------| :-----:| :-----:| 
+| GET     | /api/v1/:tableName/:id | NO | serect * from tableName where id = ? |
+| GET     | /api/v1/:tableName?order=desc&page=0&size=20 | NO | select * from tableName where id>0 order by id desc limit 0,20 |
+| POST     | /login | NO | login |
+| GET     | /api/refresh_token | YES | refresh_token |
+| DELETE     | /api/v1/:tableName/:id | YES | delete from tableName where id = ? |
+| POST     | /api/v1/:tableName| YES | insert into tableName (data.key) values (data.value) |
+| PUT     | /api/v1/:tableName| YES | create a table |
 ## Security
 
 ### Login API:
