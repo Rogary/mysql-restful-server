@@ -43,7 +43,7 @@ mysql:
 
 ## API
 
-|Method         | Path           | Auth  | Auth  |
+|Method         | Path           | Auth  | Operation  |
 | :-------------: |:-------------| :-----:| :-----:| 
 | GET     | /api/v1/:tableName/:id | NO | serect * from tableName where id = ? |
 | GET     | /api/v1/:tableName?order=desc&page=0&size=20 | NO | select * from tableName where id>0 order by id desc limit 0,20 |
@@ -51,7 +51,9 @@ mysql:
 | GET     | /api/refresh_token | YES | refresh_token |
 | DELETE     | /api/v1/:tableName/:id | YES | delete from tableName where id = ? |
 | POST     | /api/v1/:tableName| YES | insert into tableName (data.key) values (data.value) |
-| PUT     | /api/v1/:tableName| YES | create a table |
+| PUT     | /api/v1/:tableName| YES | create a table | 
+
+
 ## Security
 
 ### Login API:
@@ -94,7 +96,7 @@ Cache-Control: no-cache
 
 - ~~security API~~
 - ~~DELETE API~~
-- POST API
+- ~~POST API~~
 - PUT API
 - create table API
 - alert API
