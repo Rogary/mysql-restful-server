@@ -28,9 +28,11 @@ func GetJWTMiddleware() *jwt.GinJWTMiddleware {
 			Key:              []byte("secretkey"),
 			Timeout:          time.Hour,
 			MaxRefresh:       time.Hour,
+			SendCookie:       true,
+			CookieName:       "jwt",
 			SigningAlgorithm: "RS256",
-			PrivKeyFile:      "/Users/rogary/Desktop/my/go/src/go-mysql-rest-api/jwtRS256.key",
-			PubKeyFile:       "/Users/rogary/Desktop/my/go/src/go-mysql-rest-api/jwtRS256.key.pub",
+			PrivKeyFile:      "jwtRS256.key",
+			PubKeyFile:       "jwtRS256.key.pub",
 			IdentityKey:      identityKey,
 			PayloadFunc: func(data interface{}) jwt.MapClaims {
 				if v, ok := data.(string); ok {
@@ -89,6 +91,10 @@ func GetJWTMiddleware() *jwt.GinJWTMiddleware {
 
 			// TimeFunc provides the current time. You can override it to use another time value. This is useful for testing or if your server uses a different time zone than your tokens.
 			TimeFunc: time.Now,
+		}
+		errInit := jwtMiddleware.MiddlewareInit()
+		if errInit != nil {
+
 		}
 	}
 	return jwtMiddleware
