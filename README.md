@@ -39,7 +39,7 @@ so if you want to insert / delete / update data please enable auth
 
 you have no permission to read or modify any data from ```auth_table```  
 
-TODO： Make the fields corresponding to  ```auth_name``` and ```auth_pwd```    configurable
+TODO： Make the fields corresponding to  ```auth_name``` and ```auth_pwd```    configurable  
 TODO： Need to guard against the risk of SQL injection attacks
 
 ## Features
@@ -57,7 +57,7 @@ TODO： Need to guard against the risk of SQL injection attacks
 | GET     | /api/refresh_token | YES | refresh_token |
 | DELETE     | /api/v1/:tableName/:id | YES | delete from tableName where id = ? |
 | POST     | /api/v1/:tableName| YES | insert into tableName (data.key) values (data.value) |
-| PUT     | /api/v1/:tableName| YES | create a table | 
+| PUT     | /api/v1/:tableName/:id | YES | update from tableName  where id = ? | 
 
 
 ## Security
