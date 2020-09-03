@@ -24,16 +24,13 @@ var identityKey = "username"
 func GetJWTMiddleware() *jwt.GinJWTMiddleware {
 	if jwtMiddleware == nil {
 		jwtMiddleware = &jwt.GinJWTMiddleware{
-			Realm:            "testzone",
-			Key:              []byte("secretkey"),
-			Timeout:          time.Hour,
-			MaxRefresh:       time.Hour,
-			SendCookie:       true,
-			CookieName:       "jwt",
-			SigningAlgorithm: "RS256",
-			PrivKeyFile:      "jwtRS256.key",
-			PubKeyFile:       "jwtRS256.key.pub",
-			IdentityKey:      identityKey,
+			Realm:       "testzone",
+			Key:         []byte("secretkey"),
+			Timeout:     time.Hour,
+			MaxRefresh:  time.Hour,
+			SendCookie:  true,
+			CookieName:  "jwt",
+			IdentityKey: identityKey,
 			PayloadFunc: func(data interface{}) jwt.MapClaims {
 				if v, ok := data.(string); ok {
 					return jwt.MapClaims{

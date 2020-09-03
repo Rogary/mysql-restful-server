@@ -18,14 +18,17 @@ func main() {
 	authMiddleware := auth.GetJWTMiddleware()
 	router.GET("/api/v1/:table/:id", query.QueryDetail)
 	router.GET("/api/v1/:table", query.QueryList)
-	router.POST("/login", authMiddleware.LoginHandler)
-	auths := router.Group("/api")
-	auths.Use(authMiddleware.MiddlewareFunc())
-	{
-		auths.DELETE("/v1/:table/:id", query.DeleteDetail)
-		auths.POST("/v1/:table", query.NewData)
-		auths.GET("/refresh_token", authMiddleware.RefreshHandler)
+	if conf.GetEnableAuth() {
+		router.POST("/login", authMiddleware.LoginHandler)
+		auths := router.Group("/api")
+		auths.Use(authMiddleware.MiddlewareFunc())
+		{
+			auths.DELETE("/v1/:table/:id", query.DeleteDetail)
+			auths.POST("/v1/:table", query.NewData)
+			auths.GET("/refresh_token", authMiddleware.RefreshHandler)
+		}
 	}
+
 	router.Run(":8989")
 
 }

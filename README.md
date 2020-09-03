@@ -5,10 +5,8 @@ A guide for creating RESTful API with Golang and MySQL and Gin.
 ## Build and Usage
 
 ```bash
-go get "github.com/gin-gonic/gin"
-go get "github.com/go-sql-driver/mysql"
-go get "gopkg.in/yaml.v2"
-go get "github.com/appleboy/gin-jwt/v2"
+go mod tidy
+go mod verify
 go build
 ```
 
@@ -31,10 +29,18 @@ mysql:
   user: "root"
   pwd: "root"
   db: "test"
+  enable_auth: "true"
   auth_table: "auth"
   auth_name: "username"
   auth_pwd: "passwd"
 ```
+for security all insert / delete / update operation must login
+so if you want to insert / delete / update data please enable auth
+
+you have no permission to read or modify any data from ```auth_table```
+
+TODO： Make the fields corresponding to  ```auth_name``` and ```auth_pwd```    configurable
+
 
 ## Features
 

@@ -4,6 +4,7 @@ mysql:
   user: "root"
   pwd: "root"
   db: "huginn"
+  enable_auth: "true"
   auth_table: "auth"
   auth_name: "username"
   auth_pwd: "passwd"

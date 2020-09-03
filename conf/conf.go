@@ -11,14 +11,15 @@ type Conf struct {
 	MYSQLCONF MysqlConf `yaml:"mysql"`
 }
 type MysqlConf struct {
-	Host      string `yaml:"host,omitempty"`
-	User      string `yaml:"user,omitempty"`
-	Pwd       string `yaml:"pwd,omitempty"`
-	DB        string `yaml:"db,omitempty"`
-	Port      string `yaml:"port,omitempty"`
-	AuthTable string `yaml:"auth_table,omitempty"`
-	AuthName  string `yaml:"auth_name,omitempty"`
-	AuthPwd   string `yaml:"auth_pwd,omitempty"`
+	Host       string `yaml:"host,omitempty"`
+	User       string `yaml:"user,omitempty"`
+	Pwd        string `yaml:"pwd,omitempty"`
+	DB         string `yaml:"db,omitempty"`
+	Port       string `yaml:"port,omitempty"`
+	EnableAuth string `yaml:"enable_auth,omitempty"`
+	AuthTable  string `yaml:"auth_table,omitempty"`
+	AuthName   string `yaml:"auth_name,omitempty"`
+	AuthPwd    string `yaml:"auth_pwd,omitempty"`
 }
 
 var conf *Conf = nil
@@ -51,6 +52,9 @@ func GetAuthTableName() string {
 }
 func GetAuthName() string {
 	return GetConf().MYSQLCONF.AuthName
+}
+func GetEnableAuth() bool {
+	return GetConf().MYSQLCONF.EnableAuth == "true"
 }
 func GetAuthPwd() string {
 	return GetConf().MYSQLCONF.AuthPwd
