@@ -3,14 +3,15 @@ package conf
 import (
 	"io/ioutil"
 	"log"
+	"os"
 
 	"gopkg.in/yaml.v2"
 )
 
-type Conf struct {
-	MYSQLCONF MysqlConf `yaml:"mysql"`
+type conf struct {
+	MYSQLCONF mysqlConf `yaml:"mysql"`
 }
-type MysqlConf struct {
+type mysqlConf struct {
 	Host       string `yaml:"host,omitempty"`
 	User       string `yaml:"user,omitempty"`
 	Pwd        string `yaml:"pwd,omitempty"`
@@ -22,15 +23,15 @@ type MysqlConf struct {
 	AuthPwd    string `yaml:"auth_pwd_field,omitempty"`
 }
 
-var conf *Conf = nil
+var confs *conf
 
-func GetConf() *Conf {
-	if conf == nil {
+func getConf() *conf {
+	if confs == nil {
 		content, err := ioutil.ReadFile("conf.yaml")
 		if err != nil {
 			log.Fatal(err)
 		}
-		cfg := &Conf{}
+		cfg := &conf{}
 		// If the entire config body is empty the UnmarshalYAML method is
 		// never called. We thus have to set the DefaultConfig at the entry
 		// point as well.
@@ -38,24 +39,86 @@ func GetConf() *Conf {
 		if err2 != nil {
 			log.Fatal(err)
 		}
-		conf = cfg
+		confs = cfg
 	}
-	return conf
+	return confs
 }
 
-func GetMysqlDataSourc() string {
-	return GetConf().MYSQLCONF.User + ":" + GetConf().MYSQLCONF.Pwd + "@tcp(" + GetConf().MYSQLCONF.Host + ":" + GetConf().MYSQLCONF.Port + ")/" + GetConf().MYSQLCONF.DB
+// GetMysqlDataSource get datasourceUrl
+func GetMysqlDataSource() string {
+	return getMysqlUser() + ":" + getMysqlPwd() + "@tcp(" + getMysqlHost() + ":" + getMysqlPort() + ")/" + getMysqlDb()
 }
 
+func getMysqlUser() string {
+	mysqlUser := os.Getenv("MYSQL_USER")
+	if mysqlUser != "" {
+		return mysqlUser
+	}
+	return getConf().MYSQLCONF.User
+}
+func getMysqlPwd() string {
+	mysqlPwd := os.Getenv("MYSQL_PWD")
+	if mysqlPwd != "" {
+		return mysqlPwd
+	}
+	return getConf().MYSQLCONF.Pwd
+}
+
+func getMysqlHost() string {
+	mysqlHost := os.Getenv("MYSQL_HOST")
+	if mysqlHost != "" {
+		return mysqlHost
+	}
+	return getConf().MYSQLCONF.Host
+}
+
+func getMysqlPort() string {
+	mysqlPort := os.Getenv("MYSQL_PORT")
+	if mysqlPort != "" {
+		return mysqlPort
+	}
+	return getConf().MYSQLCONF.Port
+}
+func getMysqlDb() string {
+	mysqlDb := os.Getenv("MYSQL_DB")
+	if mysqlDb != "" {
+		return mysqlDb
+	}
+	return getConf().MYSQLCONF.DB
+}
+
+// GetAuthTableName get auth table name
 func GetAuthTableName() string {
-	return GetConf().MYSQLCONF.AuthTable
+	mysqlAuthTable := os.Getenv("MYSQL_AUTH_TABLE")
+	if mysqlAuthTable != "" {
+		return mysqlAuthTable
+	}
+	return getConf().MYSQLCONF.AuthTable
 }
+
+// GetAuthName get GetAuthNameField
 func GetAuthName() string {
-	return GetConf().MYSQLCONF.AuthName
+	mysqlAuthNameField := os.Getenv("MYSQL_AUTH_NAME_FIELD")
+	if mysqlAuthNameField != "" {
+		return mysqlAuthNameField
+	}
+	return getConf().MYSQLCONF.AuthName
 }
+
+// GetEnableAuth get GetEnableAuth
 func GetEnableAuth() bool {
-	return GetConf().MYSQLCONF.EnableAuth == "true"
+	mysqlEnableAuth := os.Getenv("MYSQL_ENABLE_AUTH")
+	if mysqlEnableAuth != "" {
+		return mysqlEnableAuth == "true"
+	}
+	return getConf().MYSQLCONF.EnableAuth == "true"
 }
+
+// GetAuthPwd get GetAuthPwdField
 func GetAuthPwd() string {
-	return GetConf().MYSQLCONF.AuthPwd
+	mysqlAuthPwdField := os.Getenv("MYSQL_AUTH_PWD_FIELD")
+	if mysqlAuthPwdField != "" {
+		return mysqlAuthPwdField
+	}
+	return getConf().MYSQLCONF.AuthPwd
 }

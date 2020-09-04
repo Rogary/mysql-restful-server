@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// DeleteDetail get DeleteDetail
 func DeleteDetail(c *gin.Context) {
 	if AdminTableFilter(c) {
 		deleteDetail(c)

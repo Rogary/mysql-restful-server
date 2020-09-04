@@ -7,6 +7,7 @@ import (
 	"log"
 )
 
+// CheckUser CheckUser
 func CheckUser(username string, passwd string) bool {
 	sqlstring := "select id from " + conf.GetAuthTableName() + " where " + conf.GetAuthName() + " = '" + username + "' and " + conf.GetAuthPwd() + " = '" + passwd + "' ;"
 	log.Println(sqlstring)

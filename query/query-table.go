@@ -12,11 +12,13 @@ import (
 	"go-mysql-rest-api/connection"
 )
 
+// QueryList queryList
 func QueryList(c *gin.Context) {
 	if AdminTableFilter(c) {
 		queryList(c)
 	}
 }
+
 func queryList(c *gin.Context) {
 	var (
 		results []map[string]string
