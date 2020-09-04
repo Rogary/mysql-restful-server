@@ -25,7 +25,6 @@ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15 go build 
 ```
 
 build docker image
-
 ```
 docker build -t go-mysql-restful-server .
 ```
@@ -34,6 +33,7 @@ run in docker
 ```
 docker run -it --rm --name my-running-app go-mysql-restful-server
 ```
+
 docker  Environment
 ```
 # MYSQL_HOST
