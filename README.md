@@ -29,9 +29,14 @@ build docker image
 docker build -t go-mysql-restful-server .
 ```
  
-run in docker 
+run in docker with confYaml 
 ```
-docker run -it --rm --name my-running-app go-mysql-restful-server
+docker run -it -v .conf.yaml:/go/src/app/conf.yaml --rm --name my-running-app go-mysql-restful-server
+```
+run in docker with Environment 
+
+```
+docker run -it -e MYSQL_HOST="" ................  --rm --name my-running-app go-mysql-restful-server
 ```
 
 docker  Environment
