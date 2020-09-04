@@ -6,5 +6,5 @@ mysql:
   db: "huginn"
   enable_auth: "true"
   auth_table: "auth"
-  auth_name_field: "username"
-  auth_pwd_field: "passwd"
+  auth_name: "username"
+  auth_pwd: "passwd"

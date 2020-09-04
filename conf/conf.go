@@ -18,8 +18,8 @@ type MysqlConf struct {
 	Port       string `yaml:"port,omitempty"`
 	EnableAuth string `yaml:"enable_auth,omitempty"`
 	AuthTable  string `yaml:"auth_table,omitempty"`
-	AuthName   string `yaml:"auth_name_field,omitempty"`
-	AuthPwd    string `yaml:"auth_pwd_field,omitempty"`
+	AuthName   string `yaml:"auth_name,omitempty"`
+	AuthPwd    string `yaml:"auth_pwd,omitempty"`
 }
 
 var conf *Conf = nil
@@ -58,10 +58,4 @@ func GetEnableAuth() bool {
 }
 func GetAuthPwd() string {
 	return GetConf().MYSQLCONF.AuthPwd
-}
-func GetAuthNameField() string {
-	return GetConf().MYSQLCONF.AuthNameField
-}
-func GetAuthPwdField() string {
-	return GetConf().MYSQLCONF.AuthPwdField
 }

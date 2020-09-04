@@ -31,14 +31,15 @@ mysql:
   db: "test"
   enable_auth: "true"
   auth_table: "auth"
-  auth_name_field: "username"
-  auth_pwd_field: "passwd"
+  auth_name: "username"
+  auth_pwd: "passwd"
 ```
 for security all insert / delete / update operation must login  
 so if you want to insert / delete / update data please enable auth  
 
 you have no permission to read or modify any data from ```auth_table```  
 
+TODO： Make the fields corresponding to  ```auth_name``` and ```auth_pwd```    configurable  
 TODO： Need to guard against the risk of SQL injection attacks
 
 ## Features
