@@ -18,6 +18,41 @@ go build
 http://localhost:8989
 ```
 
+
+build with docker
+```
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15 go build -v
+```
+
+build docker image
+```
+docker build -t go-mysql-restful-server .
+```
+ 
+run in docker with confYaml 
+```
+docker run -it -v .conf.yaml:/go/src/app/conf.yaml --rm --name my-running-app go-mysql-restful-server
+```
+run in docker with Environment 
+
+```
+docker run -it -e MYSQL_HOST="" ................  --rm --name my-running-app go-mysql-restful-server
+```
+
+docker  Environment
+```
+# MYSQL_HOST
+# MYSQL_PORT
+# MYSQL_USER
+# MYSQL_PWD
+# MYSQL_DB
+# MYSQL_ENABLE_AUTH
+# MYSQL_AUTH_TABLE
+# MYSQL_AUTH_NAME_FIEL
+# MYSQL_AUTH_PWD_FIELD
+```
+
+
 ## Config
 
 conf.yaml
