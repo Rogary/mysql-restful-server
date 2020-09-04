@@ -22,7 +22,19 @@ type mysqlConf struct {
 	AuthName   string `yaml:"auth_name_field,omitempty"`
 	AuthPwd    string `yaml:"auth_pwd_field,omitempty"`
 }
+type memoryConf struct {
+	MysqlHost     string
+	MysqlUser     string
+	MysqlPwd      string
+	MysqlDb       string
+	MysqlPort     string
+	EnableAuth    bool
+	AuthTable     string
+	AuthFieldName string
+	AuthFieldPwd  string
+}
 
+var mConf = &memoryConf{"", "", "", "", "", false, "", "", ""}
 var confs *conf
 
 func getConf() *conf {
@@ -50,75 +62,105 @@ func GetMysqlDataSource() string {
 }
 
 func getMysqlUser() string {
-	mysqlUser := os.Getenv("MYSQL_USER")
-	if mysqlUser != "" {
-		return mysqlUser
+	if mConf.MysqlUser == "" {
+		mysqlUser := os.Getenv("MYSQL_USER")
+		if mysqlUser != "" {
+			mConf.MysqlUser = mysqlUser
+		}
+		mConf.MysqlUser = getConf().MYSQLCONF.User
 	}
-	return getConf().MYSQLCONF.User
+	return mConf.MysqlUser
 }
 func getMysqlPwd() string {
-	mysqlPwd := os.Getenv("MYSQL_PWD")
-	if mysqlPwd != "" {
-		return mysqlPwd
+	if mConf.MysqlPwd == "" {
+		mysqlPwd := os.Getenv("MYSQL_PWD")
+		if mysqlPwd != "" {
+			mConf.MysqlPwd = mysqlPwd
+		}
+		mConf.MysqlPwd = getConf().MYSQLCONF.Pwd
 	}
-	return getConf().MYSQLCONF.Pwd
+	return mConf.MysqlPwd
 }
 
 func getMysqlHost() string {
-	mysqlHost := os.Getenv("MYSQL_HOST")
-	if mysqlHost != "" {
-		return mysqlHost
+	if mConf.MysqlHost == "" {
+		mysqlHost := os.Getenv("MYSQL_HOST")
+		if mysqlHost != "" {
+			mConf.MysqlHost = mysqlHost
+		}
+		mConf.MysqlHost = getConf().MYSQLCONF.Host
 	}
-	return getConf().MYSQLCONF.Host
+	return mConf.MysqlHost
 }
 
 func getMysqlPort() string {
-	mysqlPort := os.Getenv("MYSQL_PORT")
-	if mysqlPort != "" {
-		return mysqlPort
+	if mConf.MysqlPort == "" {
+		mysqlPort := os.Getenv("MYSQL_PORT")
+		if mysqlPort != "" {
+			mConf.MysqlPort = mysqlPort
+		}
+		mConf.MysqlPort = getConf().MYSQLCONF.Port
 	}
-	return getConf().MYSQLCONF.Port
+	return mConf.MysqlPort
 }
 func getMysqlDb() string {
-	mysqlDb := os.Getenv("MYSQL_DB")
-	if mysqlDb != "" {
-		return mysqlDb
+	if mConf.MysqlDb == "" {
+		mysqlDb := os.Getenv("MYSQL_DB")
+		if mysqlDb != "" {
+			mConf.MysqlDb = mysqlDb
+		}
+		mConf.MysqlDb = getConf().MYSQLCONF.DB
 	}
-	return getConf().MYSQLCONF.DB
+	return mConf.MysqlDb
 }
 
 // GetAuthTableName get auth table name
 func GetAuthTableName() string {
-	mysqlAuthTable := os.Getenv("MYSQL_AUTH_TABLE")
-	if mysqlAuthTable != "" {
-		return mysqlAuthTable
+	if mConf.AuthTable == "" {
+
+		mysqlAuthTable := os.Getenv("MYSQL_AUTH_TABLE")
+		if mysqlAuthTable != "" {
+			mConf.AuthTable = mysqlAuthTable
+		}
+		mConf.AuthTable = getConf().MYSQLCONF.AuthTable
 	}
-	return getConf().MYSQLCONF.AuthTable
+	return mConf.AuthTable
 }
 
 // GetAuthName get GetAuthNameField
 func GetAuthName() string {
-	mysqlAuthNameField := os.Getenv("MYSQL_AUTH_NAME_FIELD")
-	if mysqlAuthNameField != "" {
-		return mysqlAuthNameField
+	if mConf.AuthFieldName == "" {
+		mysqlAuthNameField := os.Getenv("MYSQL_AUTH_NAME_FIELD")
+		if mysqlAuthNameField != "" {
+			mConf.AuthFieldName = mysqlAuthNameField
+		}
+		mConf.AuthFieldName = getConf().MYSQLCONF.AuthName
 	}
-	return getConf().MYSQLCONF.AuthName
+	return mConf.AuthFieldName
 }
 
 // GetEnableAuth get GetEnableAuth
 func GetEnableAuth() bool {
-	mysqlEnableAuth := os.Getenv("MYSQL_ENABLE_AUTH")
-	if mysqlEnableAuth != "" {
-		return mysqlEnableAuth == "true"
+	if mConf.EnableAuth == false {
+
+		mysqlEnableAuth := os.Getenv("MYSQL_ENABLE_AUTH")
+		if mysqlEnableAuth != "" {
+			mConf.EnableAuth = mysqlEnableAuth == "true"
+		}
+		mConf.EnableAuth = getConf().MYSQLCONF.EnableAuth == "true"
 	}
-	return getConf().MYSQLCONF.EnableAuth == "true"
+	return mConf.EnableAuth
 }
 
 // GetAuthPwd get GetAuthPwdField
 func GetAuthPwd() string {
-	mysqlAuthPwdField := os.Getenv("MYSQL_AUTH_PWD_FIELD")
-	if mysqlAuthPwdField != "" {
-		return mysqlAuthPwdField
+	if mConf.AuthFieldPwd == "" {
+
+		mysqlAuthPwdField := os.Getenv("MYSQL_AUTH_PWD_FIELD")
+		if mysqlAuthPwdField != "" {
+			mConf.AuthFieldPwd = mysqlAuthPwdField
+		}
+		mConf.AuthFieldPwd = getConf().MYSQLCONF.AuthPwd
 	}
-	return getConf().MYSQLCONF.AuthPwd
+	return mConf.AuthFieldPwd
 }
