@@ -21,18 +21,20 @@ http://localhost:8989
 ## Config
 
 conf.yaml
+you can conf from env 
 
+Environment takes precedence over configuration files
 ```yaml
 mysql:
-  host: "127.0.0.1"
-  port: "3306"
-  user: "root"
-  pwd: "root"
-  db: "test"
-  enable_auth: "true"
-  auth_table: "auth"
-  auth_name_field: "username"
-  auth_pwd_field: "passwd"
+  host: "127.0.0.1"                # MYSQL_HOST
+  port: "3306"                     # MYSQL_PORT
+  user: "root"                     # MYSQL_USER
+  pwd: "root"                      # MYSQL_PWD
+  db: "test"                       # MYSQL_DB
+  enable_auth: "true"              # MYSQL_ENABLE_AUTH
+  auth_table: "auth"               # MYSQL_AUTH_TABLE
+  auth_name_field: "username"      # MYSQL_AUTH_NAME_FIELD
+  auth_pwd_field: "passwd"         # MYSQL_AUTH_PWD_FIELD
 ```
 for security all insert / delete / update operation must login  
 so if you want to insert / delete / update data please enable auth  
