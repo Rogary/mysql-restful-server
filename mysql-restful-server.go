@@ -33,5 +33,5 @@ func main() {
 
 }
 func initPool() {
-	connection.InitConnection(conf.GetMysqlDataSourc())
+	connection.InitConnection(conf.GetMysqlDataSource())
 }

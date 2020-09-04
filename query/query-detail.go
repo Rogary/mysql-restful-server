@@ -10,16 +10,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// QueryDetail QueryDetail
 func QueryDetail(c *gin.Context) {
 	if AdminTableFilter(c) {
 		queryDetail(c)
 	}
 }
 
-/**
-* func QueryDetail
-* table/:id
-**/
 func queryDetail(c *gin.Context) {
 	var (
 		result gin.H

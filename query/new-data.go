@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// NewData NewData
 func NewData(c *gin.Context) {
 	if AdminTableFilter(c) {
 		newData(c)

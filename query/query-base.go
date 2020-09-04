@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// AdminTableFilter AdminTableFilter
 func AdminTableFilter(c *gin.Context) bool {
 	table := c.Param("table")
 	if strings.Compare(table, conf.GetAuthTableName()) == 0 {
