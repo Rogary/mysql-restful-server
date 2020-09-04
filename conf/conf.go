@@ -59,9 +59,3 @@ func GetEnableAuth() bool {
 func GetAuthPwd() string {
 	return GetConf().MYSQLCONF.AuthPwd
 }
-func GetAuthNameField() string {
-	return GetConf().MYSQLCONF.AuthNameField
-}
-func GetAuthPwdField() string {
-	return GetConf().MYSQLCONF.AuthPwdField
-}
